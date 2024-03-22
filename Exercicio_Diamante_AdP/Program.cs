@@ -6,50 +6,23 @@
         {
             while (true)
             {
-
                 ApresentaçãoPrograma();
-                
-                //Menu de entrada;
-                
-                int inputNumeroImpar;
-                if (!GetInputInt("Insira um numero impar para a criação do diamante: ", out inputNumeroImpar) || inputNumeroImpar % 2 == 0)
+
+                int inputNumeroImpar = ValidacaoInput();
+                if (inputNumeroImpar % 2 == 0)
                 {
-                    Console.WriteLine("Numero invalido, digite qualquer tecla para tentar novamente...");
-                    Console.ReadKey();
-                    Console.Clear();
                     continue;
                 }
 
-                Console.WriteLine($"O numero digitado foi de {inputNumeroImpar}, Aqui está seu desenho: \n");
-
-                // Linha Superior
-                for (int qntX = 1; qntX < inputNumeroImpar; qntX += 2)
-                {
-                    int espaços = (inputNumeroImpar - qntX) / 2;
-                    Console.Write(new string(' ', espaços));
-                    Console.WriteLine(new string('X', qntX));
-
-                }
-
-                // Linha Meio
-                for (int i = 0; i < inputNumeroImpar; i++)
-                {
-                    Console.Write('X');
-                }
-
+                LinhaSuperior(inputNumeroImpar);
+                LinhaDoMeio(inputNumeroImpar);
                 Console.WriteLine();
-
-                //linha inferior
-                for (int qntX = inputNumeroImpar - 2; qntX >= 1; qntX -= 2)
-                {
-                    int espaços = (inputNumeroImpar - qntX) / 2;
-                    Console.Write(new string(' ', espaços));
-                    Console.WriteLine(new string('X', qntX));
-                }
-                break;
+                LinhaInferior(inputNumeroImpar);
+                return;
             }
         }
-
+        
+        #region Funções Do Programa
         private static void ApresentaçãoPrograma()
         {
             Console.WriteLine("=====================================================");
@@ -65,10 +38,51 @@
             Console.Clear();
         }
 
-        static bool GetInputInt(string mensagem, out int userInput)
+        private static bool GetInputInt(string mensagem, out int userInput)
         {
             Console.WriteLine(mensagem);
             return int.TryParse(Console.ReadLine(), out userInput);
         }
+
+        private static int ValidacaoInput()
+        {
+            int inputNumeroImpar;
+            if (!GetInputInt("Insira um numero impar para a criação do diamante: ", out inputNumeroImpar) || inputNumeroImpar % 2 == 0)
+            {
+                Console.WriteLine("Numero invalido, digite qualquer tecla para tentar novamente...");
+                Console.ReadKey();
+                Console.Clear();
+            }
+            return inputNumeroImpar;
+        }
+
+        private static void LinhaSuperior(int inputNumeroImpar)
+        {
+            for (int qntX = 1; qntX < inputNumeroImpar; qntX += 2)
+            {
+                int espaços = (inputNumeroImpar - qntX) / 2;
+                Console.Write(new string(' ', espaços));
+                Console.WriteLine(new string('X', qntX));
+            }
+        }
+
+        private static void LinhaDoMeio(int inputNumeroImpar)
+        {
+            for (int i = 0; i < inputNumeroImpar; i++)
+            {
+                Console.Write('X');
+            }
+        }
+
+        private static void LinhaInferior(int inputNumeroImpar)
+        {
+            for (int qntX = inputNumeroImpar - 2; qntX >= 1; qntX -= 2)
+            {
+                int espaços = (inputNumeroImpar - qntX) / 2;
+                Console.Write(new string(' ', espaços));
+                Console.WriteLine(new string('X', qntX));
+            }
+        }
+        #endregion
     }
 }
